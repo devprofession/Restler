@@ -297,7 +297,7 @@ class CommentParser
                 $data[$param] = array('description' => (string) $data[$param]);
             }
             if (is_array($value)) {
-                $data[$param] = $value + $data[$param];
+                $data[$param] = $value . $data[$param];
             }
         }
     }
