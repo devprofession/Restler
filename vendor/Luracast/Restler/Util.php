@@ -226,6 +226,9 @@ class Util
 
     public static function getShortName($className)
     {
+        if (is_array($className)) {
+            $className = $className[0];
+        }
         $className = explode('\\', $className);
         return end($className);
     }
