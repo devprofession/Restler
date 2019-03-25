@@ -42,8 +42,8 @@ class MemcacheCache implements iCache
     {
         self::$namespace = $namespace;
         if (function_exists('memcache_connect')) {
-            $this->memcache = new \Memcache;
-            $this->memcache->connect(self::$memcacheServer, self::$memcachePort);
+            $this->memcache = new \Memcached;
+            $this->memcache->addServer(self::$memcacheServer, self::$memcachePort);
         } else {
             $this->memcacheNotAvailable('Memcache is not available for use as Restler Cache. Please make sure the the memcache php extension is installed.');
         }
