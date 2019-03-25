@@ -41,7 +41,7 @@ class MemcacheCache implements iCache
     function __construct($namespace = 'restler')
     {
         self::$namespace = $namespace;
-        if (function_exists('memcache_connect')) {
+        if (class_exists('Memcached')) {
             $this->memcache = new \Memcached;
             $this->memcache->addServer(self::$memcacheServer, self::$memcachePort);
         } else {
@@ -60,7 +60,7 @@ class MemcacheCache implements iCache
      */
     public function set($name, $data)
     {
-        function_exists('memcache_set') || $this->memcacheNotAvailable();
+        class_exists('Memcached') || $this->memcacheNotAvailable();
 
         try {
             return $this->memcache->set(self::$namespace . "-" . $name, $data);
@@ -87,7 +87,7 @@ class MemcacheCache implements iCache
      */
     public function get($name, $ignoreErrors = false)
     {
-        function_exists('memcache_get') || $this->memcacheNotAvailable();
+        class_exists('Memcached') || $this->memcacheNotAvailable();
 
         try {
             return $this->memcache->get(self::$namespace . "-" . $name);
@@ -111,7 +111,7 @@ class MemcacheCache implements iCache
      */
     public function clear($name, $ignoreErrors = false)
     {
-        function_exists('memcache_delete') || $this->memcacheNotAvailable();
+        class_exists('Memcached') || $this->memcacheNotAvailable();
 
         try {
             $this->memcache->delete(self::$namespace . "-" . $name);
@@ -132,7 +132,7 @@ class MemcacheCache implements iCache
      */
     public function isCached($name)
     {
-        function_exists('memcache_get') || $this->memcacheNotAvailable();
+        class_exists('Memcached') || $this->memcacheNotAvailable();
         $data = $this->memcache->get(self::$namespace . "-" . $name);
         return !empty($data);
     }
